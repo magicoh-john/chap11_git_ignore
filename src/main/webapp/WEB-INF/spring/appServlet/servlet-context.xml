@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+    <!-- 스프링 MVC 설정(웹관련 빈들 로딩)
+    	스프링 MVC가 구현되기 위한 여러 빈들의 사용을 활성화한다.
+    	대표적으로 RequestMapping, HandlerAdapter, @Controller
+     -->
+    <mvc:annotation-driven />
+
+    <!-- 정적 리소스 매핑 -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
+    <!-- 뷰 리졸버 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!-- Interceptor 설정 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- LoginInterceptor 등록 -->
+            <mvc:mapping path="/board/insert" />
+            <mvc:mapping path="/board/update" />
+            <mvc:mapping path="/board/delete" />
+            <!-- 제외 경로 -->
+            <mvc:exclude-mapping path="/resources/**"/>
+            <!-- Interceptor 클래스 -->
+            <bean class="com.javalab.board.interceptor.LoginInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+       <!-- 컨트롤러 빈 스캔 -->
+    <context:component-scan base-package="com.javalab.board.controller" />
+    <!-- ControllerAdvice 빈 스캔 -->
+    <context:component-scan base-package="com.javalab.board.exception" />    
+</beans>
