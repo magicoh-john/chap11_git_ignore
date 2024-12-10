@@ -68,6 +68,7 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("serverTime2", formattedDate );
 		return "index";
 	}
 	
