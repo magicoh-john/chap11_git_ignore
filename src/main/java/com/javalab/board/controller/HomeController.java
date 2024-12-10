@@ -69,6 +69,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("serverTime2", formattedDate );
+		model.addAttribute("serverTime3", formattedDate ); // th브랜치 추가
 		return "index";
 	}
 	
